@@ -1,11 +1,11 @@
 function isCorrectMove(start, destination, type) {
-    var figure = {
+    const figure = {
         start: start,
         destination: destination,
         type: type
     };
 
-    return fetch('http://127.0.0.1:8080/api/chess/is-correct-move', {
+    return fetch('/api/chess/is-correct-move', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,9 +28,12 @@ function isCorrectMove(start, destination, type) {
         });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    var startPosition = null;
-    var destinationPosition = null;
+document.addEventListener('DOMContentLoaded', function() {
+    let startPosition = null;
+    let destinationPosition = null;
+
+    buildChessboard(document.querySelector('.chessboard'));
+    addPiece('c_1', '&#9815;');
 
     document.querySelectorAll('.field').forEach(function (field) {
         field.addEventListener('mouseup', function () {
@@ -49,10 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('#figure').style.color = '#000000';
                             document.querySelector('#figure').remove();
                             document.getElementById(destinationPosition).innerHTML = '<span id="figure">&#9815;</span>';
+                            console.log("ruch jest poprawny!");
                         } else {
                             document.querySelector('#figure').style.color = '#000000';
                             document.querySelector('#figure').remove();
                             document.getElementById(startPosition).innerHTML = '<span id="figure">&#9815;</span>';
+                            console.log("ruch jest niepoprawny!");
+                            alert("Ruch jest niepoprawny!");
                         }
 
                         startPosition = null;
@@ -62,3 +68,52 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function buildChessboard(chessboard) {
+
+    function createHeader(text) {
+        const div = document.createElement('div');
+        div.classList.add('field', 'header');
+        div.textContent = text;
+        return div;
+    }
+
+    chessboard.appendChild(createHeader(''));
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].forEach(letter => {
+        chessboard.appendChild(createHeader(letter));
+    });
+    chessboard.appendChild(createHeader(''));
+
+    // Wiersze planszy od 8 do 1
+    for (let row = 8; row >= 1; row--) {
+        chessboard.appendChild(createHeader(row));
+
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].forEach((col, index) => {
+            // Określ kolor: parzysta suma (row + index) -> white, nieparzysta -> black
+            const color = (row + index) % 2 === 0 ? 'white' : 'black';
+            const field = document.createElement('div');
+            field.classList.add('field', color);
+            field.id = `${col}_${row}`;
+            chessboard.appendChild(field);
+        });
+
+        chessboard.appendChild(createHeader(row));
+    }
+
+    chessboard.appendChild(createHeader(''));
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].forEach(letter => {
+        chessboard.appendChild(createHeader(letter));
+    });
+
+    chessboard.appendChild(createHeader(''));
+}
+
+function addPiece(fieldId, pieceCode) {
+    const field = document.getElementById(fieldId);
+    if (field) {
+        const span = document.createElement('span');
+        span.id = 'figure';
+        span.innerHTML = pieceCode;
+        field.appendChild(span);
+    }
+}
