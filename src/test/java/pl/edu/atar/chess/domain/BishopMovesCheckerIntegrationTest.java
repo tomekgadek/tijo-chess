@@ -1,4 +1,4 @@
-package pl.edu.atar.game.checker;
+package pl.edu.atar.chess.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

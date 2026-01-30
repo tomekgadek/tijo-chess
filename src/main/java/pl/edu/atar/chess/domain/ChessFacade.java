@@ -1,41 +1,29 @@
-package pl.edu.atar.service;
+package pl.edu.atar.chess.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
-import org.springframework.stereotype.Service;
-import pl.edu.atar.domain.dto.FigureMoveDto;
-import pl.edu.atar.domain.enums.FigureType;
-import pl.edu.atar.domain.mapper.InternalMapper;
-import pl.edu.atar.game.checker.MovesChecker;
-import pl.edu.atar.game.model.FigurePosition;
+import pl.edu.atar.chess.dto.FigureMoveDto;
+import pl.edu.atar.chess.dto.FigurePosition;
+import pl.edu.atar.chess.dto.FigureType;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
-@Service
-public class ChessServiceImpl implements ChessService {
-    private final InternalMapper<String, FigurePosition> positionInternalMapper;
+public class ChessFacade {
 
     private final List<MovesChecker<FigureType>> checkers;
 
-    @Autowired
-    public ChessServiceImpl(
-            InternalMapper<String, FigurePosition> positionInternalMapper,
-            List<MovesChecker<FigureType>> checkers
-    ) {
-        this.positionInternalMapper = positionInternalMapper;
+    public ChessFacade(List<MovesChecker<FigureType>> checkers) {
         this.checkers = checkers;
     }
 
-    @Override
     public boolean isMoveCorrect(FigureMoveDto figureMoveDto) {
 
         if(figureMoveDto.start().isBlank() || figureMoveDto.destination().isBlank()) {
             return false;
         }
 
-        final Pair<FigurePosition, FigurePosition> figurePositionPair =
-                getBeginAndDestinationPair(figureMoveDto);
+        final Pair<FigurePosition, FigurePosition> figurePositionPair = getBeginAndDestinationPair(figureMoveDto);
 
         if (figurePositionPair.getFirst().equals(figurePositionPair.getSecond())) {
             return false;
@@ -57,9 +45,17 @@ public class ChessServiceImpl implements ChessService {
     }
 
     private Pair<FigurePosition, FigurePosition> getBeginAndDestinationPair(FigureMoveDto figureMoveDto) {
+        final List<String> pointStart = Pattern.compile("_")
+                .splitAsStream(figureMoveDto.start())
+                .toList();
+
+        final List<String> pointDestination = Pattern.compile("_")
+                .splitAsStream(figureMoveDto.destination())
+                .toList();
+
         return Pair.of(
-                positionInternalMapper.map(figureMoveDto.start()),
-                positionInternalMapper.map(figureMoveDto.destination())
+                new FigurePosition(pointStart.get(0), pointStart.get(1)),
+                new FigurePosition(pointDestination.get(0), pointDestination.get(1))
         );
     }
 }

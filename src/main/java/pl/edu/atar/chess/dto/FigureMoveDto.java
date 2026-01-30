@@ -1,6 +1,4 @@
-package pl.edu.atar.domain.dto;
-
-import pl.edu.atar.domain.enums.FigureType;
+package pl.edu.atar.chess.dto;
 
 import java.io.Serializable;
 

@@ -1,10 +1,10 @@
-package pl.edu.atar.game.checker;
+package pl.edu.atar.chess.domain;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pl.edu.atar.game.model.FigurePosition;
+import pl.edu.atar.chess.dto.FigurePosition;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

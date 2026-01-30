@@ -1,13 +1,12 @@
-package pl.edu.atar.game.checker;
+package pl.edu.atar.chess.domain;
 
 import org.springframework.stereotype.Component;
-import pl.edu.atar.domain.enums.FigureType;
-import pl.edu.atar.game.ChessBoard;
-import pl.edu.atar.game.model.FigurePosition;
+import pl.edu.atar.chess.dto.FigureType;
+import pl.edu.atar.chess.dto.FigurePosition;
 
 @Component
 
-public class BishopMovesChecker implements MovesChecker<FigureType> {
+class BishopMovesChecker implements MovesChecker<FigureType> {
 
     @Override
     public FigureType getType() {
