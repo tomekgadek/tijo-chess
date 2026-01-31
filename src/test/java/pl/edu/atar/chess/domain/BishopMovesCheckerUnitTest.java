@@ -5,6 +5,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.edu.atar.chess.dto.FigurePosition;
+import pl.edu.atar.chess.dto.FigureType;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,11 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 public class BishopMovesCheckerUnitTest {
 
-    private final BishopMovesChecker checker;
+    private final MovesChecker checker;
 
     @Autowired
-    public BishopMovesCheckerUnitTest(BishopMovesChecker checker) {
-        this.checker = checker;
+    public BishopMovesCheckerUnitTest(List<MovesChecker<FigureType>> checkers) {
+        this.checker = checkers.stream()
+                .filter(checker -> checker.getType().equals(FigureType.BISHOP))
+                .findFirst()
+                .orElseThrow();
     }
 
     @ParameterizedTest

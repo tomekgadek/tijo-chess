@@ -2,15 +2,15 @@
 
 ## Kurs
 
-Testowanie i Jakość Oprogramowania / Projekt
-
-## Autor
-
-Tomasz Gądek
+Testowanie i Jakość Oprogramowania (projekt)
 
 ## Temat projektu
 
 Testowanie gońca na planszy szachowej 8x8
+
+## Okładka projektu
+
+![chess](./cover/chess-game.png)
 
 ## Opis projektu
 
@@ -66,3 +66,7 @@ Oto 10  różnorodnych testów dla **gońca** w grze w szachy:
 - HTML
 - CSS
 - JavaScript
+
+## Autor
+
+Tomasz Gądek
