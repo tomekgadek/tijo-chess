@@ -49,7 +49,7 @@ mvn test
 
 ## Scenariusze testowe dla testera manualnego
 
-Oto 10  różnorodnych testów dla **gońca** w grze w szachy:
+Oto 10 (dopisz brakujące przypadki testowe) różnorodnych testów dla **gońca** w grze w szachy:
 
 | Test Case ID | Opis                                                           | Kroki testowe                                                                                          | Oczekiwany wynik                                                              |
 |--------------|----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
